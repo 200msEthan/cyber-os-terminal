@@ -1,0 +1,19 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# LocalFIM baseline & backups
+.cyber_fim.json
+*.cyber_backup
+.DS_Store
+Thumbs.db

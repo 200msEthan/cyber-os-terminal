@@ -1,0 +1,59 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cyber-os-terminal"
+version = "4.5.0"
+description = "Cross-platform 24-bit TrueColor Cyberpunk Sci-Fi Terminal HUD, Port Killer, Live Thread/Job Monitor & Cybersecurity Recon Suite (Linux, macOS, Windows)"
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+authors = [
+    { name = "Abhisek", email = "abhisekrock94@gmail.com" }
+]
+keywords = [
+    "cyberpunk",
+    "terminal",
+    "hud",
+    "cybersecurity",
+    "port-scanner",
+    "kill-port",
+    "process-monitor",
+    "threads",
+    "cli",
+    "zsh",
+    "bash",
+    "powershell",
+    "starship"
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "Intended Audience :: Information Technology",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: MacOS",
+    "Operating System :: Microsoft :: Windows",
+    "Programming Language :: Python :: 3",
+    "Topic :: Security",
+    "Topic :: System :: Monitoring",
+    "Topic :: System :: Networking :: Monitoring",
+    "Topic :: Terminals"
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/abhisek11/cyber-os-terminal"
+Repository = "https://github.com/abhisek11/cyber-os-terminal"
+Issues = "https://github.com/abhisek11/cyber-os-terminal/issues"
+
+[project.scripts]
+cyber-hud = "scifi_hud:main"
+cyber-tools = "cyber_tools:main"
+
+[tool.setuptools]
+py-modules = ["scifi_hud", "cyber_tools"]

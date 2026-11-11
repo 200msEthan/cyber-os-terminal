@@ -1,0 +1,46 @@
+name: Cross-Platform CI (Linux, macOS, Windows)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test-cyber-os:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: ["3.10", "3.12"]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Test Telemetry HUD
+        run: python scifi_hud.py
+
+      - name: Test Jobs, Live Threads & Scheduled Tasks Scanner
+        run: python cyber_tools.py --jobs
+
+      - name: Test Port Scanner
+        run: python cyber_tools.py --ports 127.0.0.1 --range 22,80,443
+
+      - name: Test Crypto Hasher, JWT Decoder & Keygen
+        run: |
+          python cyber_tools.py --hash "CYBER-OS-TEST"
+          python cyber_tools.py --keygen 32
+
+      - name: Test Host Security Audit & Secret Scanner
+        run: |
+          python cyber_tools.py --audit
+          python cyber_tools.py --secrets .
+          python cyber_tools.py --arsenal
