@@ -54,6 +54,8 @@ Issues = "https://github.com/abhisek11/cyber-os-terminal/issues"
 [project.scripts]
 cyber-hud = "scifi_hud:main"
 cyber-tools = "cyber_tools:main"
+cyber-search = "cyber_search:main"
+cyber-cam = "cyber_vision:main"
 
 [tool.setuptools]
-py-modules = ["scifi_hud", "cyber_tools"]
+py-modules = ["scifi_hud", "cyber_tools", "cyber_search", "cyber_vision"]

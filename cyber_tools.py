@@ -1352,13 +1352,19 @@ def interactive_menu():
         print(
             box_row(
                 f"  {CYAN}[7]{RESET} {WHITE}Active TCP Connections{RESET}   {GRAY}(cyber-conn){RESET}    "
+                f"│  {CYAN}[14]{RESET} {GREEN}{BOLD}Camera Face/ASL/Voice{RESET} {GRAY}(cyber-cam){RESET}"
+            )
+        )
+        print(
+            box_row(
+                f"  {CYAN}[15]{RESET} {YELLOW}{BOLD}Omni-Search Engine{RESET}      {GRAY}(cyber-search){RESET}  "
                 f"│  {RED}[0]{RESET}  {GRAY}Exit Cyber-Deck{RESET}"
             )
         )
         print(f"{MAGENTA}╚{'═' * BOX_INNER_WIDTH}╝{RESET}")
 
         try:
-            choice = input(f"\n  {MAGENTA}╔═[{CYAN}⚡ SELECT MODULE (0-13){MAGENTA}]═❯ {RESET}").strip()
+            choice = input(f"\n  {MAGENTA}╔═[{CYAN}⚡ SELECT MODULE (0-15){MAGENTA}]═❯ {RESET}").strip()
         except (EOFError, KeyboardInterrupt):
             print(f"\n  {CYAN}⚡ Disconnecting from Cyber-Deck Arsenal...{RESET}\n")
             break
@@ -1412,8 +1418,16 @@ def interactive_menu():
             tool_secret_scanner(d)
         elif choice == "13":
             tool_arsenal_status()
+        elif choice == "14":
+            script_dir = os.path.dirname(os.path.abspath(__file__))
+            subprocess.run([sys.executable, os.path.join(script_dir, "cyber_vision.py")], check=False)
+        elif choice == "15":
+            q = input(f"  {CYAN}▸ Enter Omni-Search Query (Files + Browser History + Web): {RESET}").strip()
+            if q:
+                script_dir = os.path.dirname(os.path.abspath(__file__))
+                subprocess.run([sys.executable, os.path.join(script_dir, "cyber_search.py"), "--omni", q], check=False)
         else:
-            print(f"  {RED}✖ Invalid selection '{choice}'. Choose 0-13.{RESET}")
+            print(f"  {RED}✖ Invalid selection '{choice}'. Choose 0-15.{RESET}")
 
 
 def main():

@@ -79,6 +79,30 @@ function cyber-nmap {
     & $PythonExe (Join-Path $CyberDir "cyber_tools.py") --nmap $Target
 }
 
+function cyber-cam {
+    & $PythonExe (Join-Path $CyberDir "cyber_vision.py") @args
+}
+
+function cyber-search {
+    param([string]$Query = "cyber")
+    & $PythonExe (Join-Path $CyberDir "cyber_search.py") --omni $Query
+}
+
+function cyber-find {
+    param([string]$Query = "cyber", [string]$Dir = ".")
+    & $PythonExe (Join-Path $CyberDir "cyber_search.py") --files $Query --dir $Dir
+}
+
+function cyber-history {
+    param([string]$Query = "recent")
+    & $PythonExe (Join-Path $CyberDir "cyber_search.py") --history $Query
+}
+
+function cyber-web {
+    param([string]$Query = "cybersecurity")
+    & $PythonExe (Join-Path $CyberDir "cyber_search.py") --web $Query
+}
+
 # ----------------------------------------------------------------------------
 # 2. CYBERPUNK NEON PROMPT (STARSHIP OR BUILT-IN TRUECOLOR FALLBACK)
 # ----------------------------------------------------------------------------

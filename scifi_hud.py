@@ -512,6 +512,15 @@ def render_hud(animate_boot: bool = False):
             f"{CYAN}cyber-audit{RESET}"
         )
     )
+    print(
+        box_row(
+            f" {CYAN}◈ AI/SEARCH:{RESET} "
+            f"{GREEN}{BOLD}cyber-cam{RESET} {GRAY}(face/ASL/voice){RESET} • "
+            f"{CYAN}cyber-search{RESET} • "
+            f"{CYAN}cyber-history{RESET} • "
+            f"{CYAN}cyber-web{RESET}"
+        )
+    )
     print(border_bot)
 
 

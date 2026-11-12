@@ -20,7 +20,7 @@ YELLOW="\033[38;2;252;238;10m"
 RESET="\033[0m"
 BOLD="\033[1m"
 
-chmod +x "${SCRIPT_DIR}/scifi_hud.py" "${SCRIPT_DIR}/cyber_tools.py" "${SCRIPT_DIR}/cyberpunk_shell.sh"
+chmod +x "${SCRIPT_DIR}/scifi_hud.py" "${SCRIPT_DIR}/cyber_tools.py" "${SCRIPT_DIR}/cyber_search.py" "${SCRIPT_DIR}/cyber_vision.py" "${SCRIPT_DIR}/cyberpunk_shell.sh"
 
 remove_block() {
     local rc_file="$1"
