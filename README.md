@@ -115,6 +115,8 @@ pip install -e .
 
 ## 🕹️ Command Reference
 
+📖 **Full reference with arguments, PowerShell syntax and several examples per command: [docs/COMMANDS.md](docs/COMMANDS.md)**
+
 | Command | Example | Description |
 | :--- | :--- | :--- |
 | **`hud`** | `hud` | Render the Cyberpunk Neon system, thread & job telemetry banner |
@@ -141,6 +143,8 @@ pip install -e .
 | **`cyber-audit`** | `cyber-audit` | Audit kernel hardening sysctls, file permissions & SUID binaries |
 | **`cyber-secrets`** | `cyber-secrets .` | Scan directory for leaked API keys, tokens & private keys |
 | **`cyber-arsenal`** | `cyber-arsenal` | Check status of native system security tools (`nmap`, `dig`, `nc`, etc.) |
+| **`cyber-scan`** | `cyber-scan` | Quick sweep of common developer ports on this machine |
+| **`cyber-nmap`** | `cyber-nmap 192.168.1.1` | Run `nmap -F -sV` (falls back to the built-in scanner) |
 
 ---
 
