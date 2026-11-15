@@ -519,11 +519,9 @@ def render_hud(animate_boot: bool = False):
     )
     print(
         box_row(
-            f" {CYAN}◈ AI/SEARCH:{RESET} "
-            f"{GREEN}{BOLD}cyber-cam{RESET} {GRAY}(face/ASL/voice){RESET} • "
-            f"{CYAN}cyber-search{RESET} • "
-            f"{CYAN}cyber-history{RESET} • "
-            f"{CYAN}cyber-web{RESET}"
+            f" {CYAN}◈ AI/VISION:{RESET} "
+            f"{GREEN}{BOLD}cyber-cam{RESET} {GRAY}(age/mood/ASL){RESET} • "
+            f"{CYAN}cyber-search{RESET}"
         )
     )
     print(border_bot)

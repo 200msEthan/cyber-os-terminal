@@ -1325,7 +1325,7 @@ def interactive_menu():
             (("4", "Domain / DNS / IP Recon", "cyber-recon", WHITE), ("11", "Kernel & Host Audit", "cyber-audit", WHITE)),
             (("5", "SSL/TLS Inspector", "cyber-ssl", WHITE), ("12", "Secret Leak Scanner", "cyber-secrets", WHITE)),
             (("6", "HTTP Security Headers", "cyber-headers", WHITE), ("13", "Cyber Arsenal", "cyber-arsenal", WHITE)),
-            (("7", "Active TCP Connections", "cyber-conn", WHITE), ("14", "Camera/ASL/Voice", "cyber-cam", GREEN + BOLD)),
+            (("7", "Active TCP Connections", "cyber-conn", WHITE), ("14", "Face/Age/Mood/ASL", "cyber-cam", GREEN + BOLD)),
             (("15", "Omni-Search Engine", "cyber-search", YELLOW + BOLD), ("0", "Exit Cyber-Deck", "", GRAY)),
         ]
 

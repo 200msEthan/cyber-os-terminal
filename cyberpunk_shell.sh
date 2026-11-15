@@ -72,7 +72,7 @@ cyber-nmap() {
     python3 "${CYBER_DIR}/cyber_tools.py" --nmap "${1:-127.0.0.1}"
 }
 
-# Neural Camera Vision (Face ID, Hand Gestures, ASL Sign Language & Voice Cockpit)
+# Neural Camera Vision (Face ID, Age/Mood, Hand Gestures, ASL Sign Language & Voice Cockpit)
 cyber-cam() {
     python3 "${CYBER_DIR}/cyber_vision.py" "$@"
 }
