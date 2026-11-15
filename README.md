@@ -128,7 +128,7 @@ pip install -e .
 | **`cyber-web`** | `cyber-web "langgraph agents"` | Search live Internet (DuckDuckGo, Wikipedia, GitHub Repos) |
 | **`cyber-tools`** | `cyber-tools` | Open interactive 15-module Cyber-Deck TUI menu |
 | **`cyber-ports`** | `cyber-ports 127.0.0.1 1-1024` | Multi-threaded TCP port, PID/thread & banner scanner |
-| **`cyber-kill`** | `cyber-kill 8000` | Identify and kill the process occupying port `8000` |
+| **`cyber-kill`** | `cyber-kill 8000` | Gracefully stop the process on port `8000`; add `--force` for a hard kill |
 | **`cyber-jobs`** | `cyber-jobs` | Scan live thread counts, top processes & scheduled cron/timer jobs |
 | **`cyber-recon`** | `cyber-recon github.com` | DNS, reverse PTR, ASN/Geo & MX/NS/TXT intelligence |
 | **`cyber-ssl`** | `cyber-ssl github.com` | Inspect TLS version, cipher suite & X.509 cert expiry |
@@ -143,6 +143,8 @@ pip install -e .
 | **`cyber-arsenal`** | `cyber-arsenal` | Check status of native system security tools (`nmap`, `dig`, `nc`, etc.) |
 
 ---
+
+See [shortcut arguments and graceful termination](docs/SHORTCUTS.md) for passing extra flags.
 
 ## 🧠 Deep-Dive: AI Vision, Gym Biomechanics & Commercial Engagement Suites
 
