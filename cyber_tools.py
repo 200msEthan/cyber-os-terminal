@@ -42,6 +42,7 @@ import string
 import subprocess
 import sys
 import time
+import unicodedata
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -132,7 +133,11 @@ COMMON_PORTS: Dict[int, str] = {
 
 
 def visible_len(text: str) -> int:
-    return len(ANSI_RE.sub("", text))
+    """Terminal display width: strips ANSI codes and counts wide glyphs (e.g. ⚡) as 2 columns."""
+    return sum(
+        2 if unicodedata.east_asian_width(ch) in ("W", "F") else 1
+        for ch in ANSI_RE.sub("", text)
+    )
 
 
 def box_row(content: str) -> str:
@@ -1313,54 +1318,26 @@ def interactive_menu():
             )
         )
         print(f"{MAGENTA}╠{'═' * BOX_INNER_WIDTH}╣{RESET}")
-        print(
-            box_row(
-                f"  {CYAN}[1]{RESET} {WHITE}Port & Process Scanner{RESET}   {GRAY}(cyber-ports){RESET}   "
-                f"│  {CYAN}[8]{RESET} {WHITE}Crypto Hash & JWT Decode{RESET} {GRAY}(cyber-hash){RESET}"
-            )
-        )
-        print(
-            box_row(
-                f"  {CYAN}[2]{RESET} {WHITE}Kill Port Job (Free Port){RESET}{GRAY}(cyber-kill){RESET}    "
-                f"│  {CYAN}[9]{RESET} {WHITE}Quantum Key Generator{RESET}    {GRAY}(cyber-keygen){RESET}"
-            )
-        )
-        print(
-            box_row(
-                f"  {CYAN}[3]{RESET} {WHITE}Jobs, Threads & Cron Scan{RESET}{GRAY}(cyber-jobs){RESET}    "
-                f"│  {CYAN}[10]{RESET} {WHITE}File Integrity (FIM){RESET}    {GRAY}(cyber-fim){RESET}"
-            )
-        )
-        print(
-            box_row(
-                f"  {CYAN}[4]{RESET} {WHITE}Domain / DNS / IP Recon{RESET}  {GRAY}(cyber-recon){RESET}   "
-                f"│  {CYAN}[11]{RESET} {WHITE}Kernel & Host Audit{RESET}     {GRAY}(cyber-audit){RESET}"
-            )
-        )
-        print(
-            box_row(
-                f"  {CYAN}[5]{RESET} {WHITE}SSL/TLS Cert Inspector{RESET}   {GRAY}(cyber-ssl){RESET}     "
-                f"│  {CYAN}[12]{RESET} {WHITE}Secret Leak Scanner{RESET}     {GRAY}(cyber-secrets){RESET}"
-            )
-        )
-        print(
-            box_row(
-                f"  {CYAN}[6]{RESET} {WHITE}HTTP Security Headers{RESET}    {GRAY}(cyber-headers){RESET} "
-                f"│  {CYAN}[13]{RESET} {WHITE}System Cyber Arsenal{RESET}    {GRAY}(cyber-arsenal){RESET}"
-            )
-        )
-        print(
-            box_row(
-                f"  {CYAN}[7]{RESET} {WHITE}Active TCP Connections{RESET}   {GRAY}(cyber-conn){RESET}    "
-                f"│  {CYAN}[14]{RESET} {GREEN}{BOLD}Camera Face/ASL/Voice{RESET} {GRAY}(cyber-cam){RESET}"
-            )
-        )
-        print(
-            box_row(
-                f"  {CYAN}[15]{RESET} {YELLOW}{BOLD}Omni-Search Engine{RESET}      {GRAY}(cyber-search){RESET}  "
-                f"│  {RED}[0]{RESET}  {GRAY}Exit Cyber-Deck{RESET}"
-            )
-        )
+        menu_rows = [
+            (("1", "Port & Process Scanner", "cyber-ports", WHITE), ("8", "Hash & JWT Decode", "cyber-hash", WHITE)),
+            (("2", "Kill Port Job", "cyber-kill", WHITE), ("9", "Key Generator", "cyber-keygen", WHITE)),
+            (("3", "Jobs, Threads & Cron", "cyber-jobs", WHITE), ("10", "File Integrity", "cyber-fim", WHITE)),
+            (("4", "Domain / DNS / IP Recon", "cyber-recon", WHITE), ("11", "Kernel & Host Audit", "cyber-audit", WHITE)),
+            (("5", "SSL/TLS Inspector", "cyber-ssl", WHITE), ("12", "Secret Leak Scanner", "cyber-secrets", WHITE)),
+            (("6", "HTTP Security Headers", "cyber-headers", WHITE), ("13", "Cyber Arsenal", "cyber-arsenal", WHITE)),
+            (("7", "Active TCP Connections", "cyber-conn", WHITE), ("14", "Camera/ASL/Voice", "cyber-cam", GREEN + BOLD)),
+            (("15", "Omni-Search Engine", "cyber-search", YELLOW + BOLD), ("0", "Exit Cyber-Deck", "", GRAY)),
+        ]
+
+        def menu_cell(num: str, label: str, alias: str, color: str, width: int) -> str:
+            key_color = RED if num == "0" else CYAN
+            cell = f" {key_color}[{num:>2}]{RESET} {color}{label}{RESET}"
+            if alias:
+                cell += f" {GRAY}({alias}){RESET}"
+            return cell + " " * max(0, width - visible_len(cell))
+
+        for left, right in menu_rows:
+            print(box_row(menu_cell(*left, width=43) + f"{GRAY}│{RESET}" + menu_cell(*right, width=42)))
         print(f"{MAGENTA}╚{'═' * BOX_INNER_WIDTH}╝{RESET}")
 
         try:

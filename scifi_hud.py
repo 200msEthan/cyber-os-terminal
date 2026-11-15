@@ -24,6 +24,7 @@ import socket
 import subprocess
 import sys
 import time
+import unicodedata
 from typing import Tuple
 
 
@@ -70,7 +71,11 @@ OS_NAME = platform.system()
 
 
 def visible_len(text: str) -> int:
-    return len(ANSI_RE.sub("", text))
+    """Terminal display width: strips ANSI codes and counts wide glyphs (e.g. ⚡) as 2 columns."""
+    return sum(
+        2 if unicodedata.east_asian_width(ch) in ("W", "F") else 1
+        for ch in ANSI_RE.sub("", text)
+    )
 
 
 def box_row(content: str) -> str:
@@ -507,7 +512,7 @@ def render_hud(animate_boot: bool = False):
             f" {MAGENTA}◈ ARSENAL  :{RESET} "
             f"{GREEN}{BOLD}cyber-tools{RESET} • "
             f"{CYAN}cyber-ports{RESET} • "
-            f"{CYAN}cyber-kill <port>{RESET} • "
+            f"{CYAN}cyber-kill{RESET} • "
             f"{CYAN}cyber-recon{RESET} • "
             f"{CYAN}cyber-audit{RESET}"
         )

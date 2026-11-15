@@ -1,0 +1,30 @@
+name: 🐛 Bug report
+description: Something is broken, misaligned, or shows the wrong numbers
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you run, what did you expect, and what did you see? A screenshot of the terminal helps a lot.
+    validations:
+      required: true
+  - type: input
+    id: command
+    attributes:
+      label: Command
+      placeholder: "cyber-kill 3000   /   python3 cyber_tools.py --ports 127.0.0.1"
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options: [Linux, macOS, Windows, WSL, Other]
+    validations:
+      required: true
+  - type: input
+    id: env
+    attributes:
+      label: Python version, shell, and terminal app
+      placeholder: "Python 3.12, zsh, iTerm2"

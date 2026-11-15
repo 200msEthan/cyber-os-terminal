@@ -20,6 +20,7 @@ import json
 import os
 import platform
 import re
+import secrets
 import socketserver
 import subprocess
 import sys
@@ -45,6 +46,10 @@ GRAY = "\033[38;2;110;120;145m"
 WHITE = "\033[38;2;230;245;255m"
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+# Per-launch secret. The web page gets it embedded; /api/action rejects calls without it.
+# A custom request header also forces a CORS preflight, which this server never answers,
+# so other websites open in the browser cannot trigger actions on the local cockpit.
+API_TOKEN = secrets.token_urlsafe(32)
 ANSI_RE = re.compile(r"\x1b\[[0-9;]*m")
 
 
@@ -426,10 +431,11 @@ function searchFromSentence() {
   }
 }
 
+const CYBER_TOKEN = "__CYBER_TOKEN__";
 async function triggerBackendAction(action, param = "") {
   logConsole(`EXECUTING ${action.toUpperCase()}`, "Processing neural request...");
   try {
-    const res = await fetch(`/api/action?cmd=${encodeURIComponent(action)}&q=${encodeURIComponent(param)}`);
+    const res = await fetch(`/api/action?cmd=${encodeURIComponent(action)}&q=${encodeURIComponent(param)}`, {headers: {"X-Cyber-Token": CYBER_TOKEN}});
     const data = await res.json();
     logConsole(data.title || action.toUpperCase(), data.output || "Completed.");
     if (data.speak) speakText(data.speak);
@@ -747,16 +753,29 @@ class CyberVisionHandler(http.server.BaseHTTPRequestHandler):
     def log_message(self, format: str, *args: Any):
         pass  # Keep terminal output clean
 
+    def _host_allowed(self) -> bool:
+        """Block DNS-rebinding: only accept requests addressed to the loopback host."""
+        host = (self.headers.get("Host") or "").rsplit(":", 1)[0].strip("[]").lower()
+        return host in ("127.0.0.1", "localhost", "::1")
+
     def do_GET(self):
         parsed = urllib.parse.urlparse(self.path)
+        if not self._host_allowed():
+            self.send_response(403)
+            self.end_headers()
+            return
         if parsed.path == "/":
             self.send_response(200)
             self.send_header("Content-Type", "text/html; charset=utf-8")
             self.end_headers()
-            self.wfile.write(CYBER_VISION_HTML.encode("utf-8"))
+            self.wfile.write(CYBER_VISION_HTML.replace("__CYBER_TOKEN__", API_TOKEN).encode("utf-8"))
             return
 
         if parsed.path == "/api/action":
+            if not secrets.compare_digest(self.headers.get("X-Cyber-Token", ""), API_TOKEN):
+                self.send_response(403)
+                self.end_headers()
+                return
             qs = urllib.parse.parse_qs(parsed.query)
             cmd = qs.get("cmd", [""])[0]
             q = qs.get("q", [""])[0]
