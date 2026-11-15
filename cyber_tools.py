@@ -48,6 +48,8 @@ import urllib.request
 import uuid
 from typing import Dict, List, Optional, Tuple
 
+from cyber_version import __version__
+
 
 def enable_cross_platform_ansi():
     """Enable UTF-8 and 24-bit ANSI TrueColor sequences on Windows, macOS, and Linux."""
@@ -702,7 +704,7 @@ def tool_recon(target: str):
         try:
             req = urllib.request.Request(
                 f"http://ip-api.com/json/{primary_ip}?fields=status,country,regionName,city,isp,org,as",
-                headers={"User-Agent": "CyberOS-Recon/4.5"},
+                headers={"User-Agent": f"CyberOS-Recon/{__version__}"},
             )
             with urllib.request.urlopen(req, timeout=3.0) as resp:
                 data = json.loads(resp.read().decode("utf-8", errors="ignore"))
@@ -810,7 +812,9 @@ def tool_http_headers(url: str):
     ctx.verify_mode = ssl.CERT_NONE
 
     try:
-        req = urllib.request.Request(url, method="GET", headers={"User-Agent": "CyberOS-SecAudit/4.5"})
+        req = urllib.request.Request(
+            url, method="GET", headers={"User-Agent": f"CyberOS-SecAudit/{__version__}"}
+        )
         with urllib.request.urlopen(req, timeout=5.0, context=ctx) as resp:
             status = resp.status
             headers = {k.lower(): v for k, v in resp.headers.items()}
@@ -1326,7 +1330,7 @@ def interactive_menu():
         print(f"\n{MAGENTA}╔{'═' * BOX_INNER_WIDTH}╗{RESET}")
         print(
             box_row(
-                f" {CYAN}{BOLD}◢◤ CYBER-OS // SECURITY, PORT-KILLER & RECON ARSENAL v4.5{RESET}"
+                f" {CYAN}{BOLD}◢◤ CYBER-OS // SECURITY, PORT-KILLER & RECON ARSENAL v{__version__}{RESET}"
                 f"   {GREEN}{BOLD}[{OS_NAME.upper()}]{RESET}"
             )
         )
@@ -1450,6 +1454,7 @@ def interactive_menu():
 
 def main():
     parser = argparse.ArgumentParser(description="CYBER-OS // Neural Security, Port-Killer & Recon Arsenal")
+    parser.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
     parser.add_argument("--menu", action="store_true", help="Launch interactive Cyber-Deck menu")
     parser.add_argument("--ports", metavar="TARGET", help="Multi-threaded TCP port, process & banner scanner")
     parser.add_argument("--range", default="common", help="Port range for --ports (e.g. 'common', '1-1024', '22,80,443')")

@@ -26,6 +26,8 @@ import sys
 import time
 from typing import Tuple
 
+from cyber_version import __version__
+
 
 def enable_cross_platform_ansi():
     """Enable UTF-8 and 24-bit ANSI TrueColor sequences on Windows, macOS, and Linux."""
@@ -452,7 +454,7 @@ def render_hud(animate_boot: bool = False):
     print(border_top)
     print(
         box_row(
-            f" {CYAN}{BOLD}◢◤ CYBER-DECK // NEURAL TERMINAL OS v4.5{RESET}"
+            f" {CYAN}{BOLD}◢◤ CYBER-DECK // NEURAL TERMINAL OS v{__version__}{RESET}"
             f"            {YELLOW}⚡ STATUS: {GREEN}{BOLD}ONLINE{RESET}"
         )
     )
@@ -637,6 +639,7 @@ def network_scan():
 
 def main():
     parser = argparse.ArgumentParser(description="Cyberpunk Sci-Fi Terminal HUD (Linux, macOS, Windows)")
+    parser.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
     parser.add_argument("--boot", action="store_true", help="Show boot animation before HUD")
     parser.add_argument("--watch", action="store_true", help="Live auto-refreshing HUD")
     parser.add_argument("--matrix", action="store_true", help="Cyberpunk neon Matrix rain")

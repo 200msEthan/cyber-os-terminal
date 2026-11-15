@@ -29,6 +29,8 @@ import urllib.parse
 import webbrowser
 from typing import Any, Dict
 
+from cyber_version import __version__
+
 import cyber_search
 import cyber_tools
 import scifi_hud
@@ -1390,6 +1392,7 @@ def main():
         description="CYBER-OS // Neural Camera Vision, Facial ID, ASL Sign Language & Voice Cockpit"
     )
     parser.add_argument("--port", type=int, default=8765, help="Local port for Neural Vision Web HUD (default: 8765)")
+    parser.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
     parser.add_argument("--no-browser", action="store_true", help="Do not auto-open browser window")
     parser.add_argument("--native", action="store_true", help="Use native OpenCV desktop window if installed")
     args = parser.parse_args()

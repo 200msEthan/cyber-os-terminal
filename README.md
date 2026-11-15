@@ -1,6 +1,6 @@
 <div align="center">
 
-# ⚡ CYBER-OS // NEURAL TERMINAL & SECURITY ARSENAL v4.5
+# ⚡ CYBER-OS // NEURAL TERMINAL & SECURITY ARSENAL v4.5.0
 
 **Zero-Dependency 24-Bit TrueColor Cyberpunk Sci-Fi Terminal HUD, Port Killer, Live Thread/Job Monitor & Cybersecurity Reconnaissance Suite**
 
@@ -20,7 +20,7 @@
 
 ```text
 ╔══════════════════════════════════════════════════════════════════════════════════════╗
-║ ◢◤ CYBER-DECK // NEURAL TERMINAL OS v4.5            ⚡ STATUS: ONLINE                 ║
+║ ◢◤ CYBER-DECK // NEURAL TERMINAL OS v4.5.0          ⚡ STATUS: ONLINE                 ║
 ║ OPERATOR: abhisek@cyberdeck │ TIME: 2026-11-12 // 02:53:18  │ UP: 1d 01h 08m         ║
 ╠══════════════════════════════════════════════════════════════════════════════════════╣
 ║ ❖ CPU CORE : [▰▰▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱]   8.4% │ AMD Ryzen 5 3600X 6-Core (12T)            ║

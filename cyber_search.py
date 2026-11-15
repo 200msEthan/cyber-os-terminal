@@ -31,6 +31,8 @@ import urllib.request
 import webbrowser
 from typing import Any, Dict, List, Tuple
 
+from cyber_version import __version__
+
 
 def enable_cross_platform_ansi():
     if hasattr(sys.stdout, "reconfigure"):
@@ -365,7 +367,7 @@ def search_web_internet(query: str, max_results: int = 10) -> List[Dict[str, str
         req = urllib.request.Request(
             f"https://html.duckduckgo.com/html/?q={encoded_q}",
             headers={
-                "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) CyberOS/4.5",
+                "User-Agent": f"Mozilla/5.0 (X11; Linux x86_64) CyberOS/{__version__}",
                 "Accept-Language": "en-US,en;q=0.9",
             },
         )
@@ -392,7 +394,7 @@ def search_web_internet(query: str, max_results: int = 10) -> List[Dict[str, str
     # 2. Wikipedia OpenSearch API
     try:
         w_url = f"https://en.wikipedia.org/w/api.php?action=opensearch&search={encoded_q}&limit=4&namespace=0&format=json"
-        req = urllib.request.Request(w_url, headers={"User-Agent": "CyberOS/4.5"})
+        req = urllib.request.Request(w_url, headers={"User-Agent": f"CyberOS/{__version__}"})
         with urllib.request.urlopen(req, timeout=3.5) as resp:
             w_data = json.loads(resp.read().decode("utf-8", errors="ignore"))
             if len(w_data) >= 4:
@@ -405,7 +407,7 @@ def search_web_internet(query: str, max_results: int = 10) -> List[Dict[str, str
     # 3. GitHub Public Repositories Search API
     try:
         gh_url = f"https://api.github.com/search/repositories?q={encoded_q}&per_page=4"
-        req = urllib.request.Request(gh_url, headers={"User-Agent": "CyberOS/4.5"})
+        req = urllib.request.Request(gh_url, headers={"User-Agent": f"CyberOS/{__version__}"})
         with urllib.request.urlopen(req, timeout=3.5) as resp:
             gh_data = json.loads(resp.read().decode("utf-8", errors="ignore"))
             for repo in gh_data.get("items", [])[:4]:
@@ -493,6 +495,7 @@ def render_omni_search(query: str, root_dir: str = ".", open_browser: bool = Fal
 
 def main():
     parser = argparse.ArgumentParser(description="CYBER-OS // Omni-Search Engine (Files, History, Web)")
+    parser.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
     parser.add_argument("query", nargs="?", default="", help="Search query string")
     parser.add_argument("--omni", metavar="QUERY", help="Search Files + Browser History + Live Web simultaneously")
     parser.add_argument("--files", metavar="QUERY", help="Search local filenames and file contents")
