@@ -313,21 +313,35 @@ def find_pids_by_port(port: int) -> List[int]:
 # ============================================================================
 # 1. MULTI-THREADED PORT, PROCESS & BANNER SCANNER
 # ============================================================================
+PORT_SPEC_HINT = "use e.g. 22,80,443 or 1-1024"
+
+
 def parse_port_spec(spec: str) -> List[int]:
     if not spec or spec.lower() == "common":
         return sorted(COMMON_PORTS.keys())
     ports = set()
     for part in spec.split(","):
         part = part.strip()
+        if not part:
+            raise ValueError(f"Invalid port spec '{spec}' — {PORT_SPEC_HINT}")
         if "-" in part:
-            start_s, end_s = part.split("-", 1)
+            start_s, end_s = (edge.strip() for edge in part.split("-", 1))
+            if not (start_s.isdigit() and end_s.isdigit()):
+                raise ValueError(f"Invalid port spec '{part}' — {PORT_SPEC_HINT}")
             start, end = int(start_s), int(end_s)
-            for p in range(max(1, start), min(65535, end) + 1):
-                ports.add(p)
+            if start > end:
+                start, end = end, start
+            start, end = max(1, start), min(65535, end)
+            if start > end:
+                raise ValueError(f"Port range '{part}' is outside 1-65535 — {PORT_SPEC_HINT}")
+            ports.update(range(start, end + 1))
         elif part.isdigit():
             p = int(part)
-            if 1 <= p <= 65535:
-                ports.add(p)
+            if not 1 <= p <= 65535:
+                raise ValueError(f"Port '{part}' is outside 1-65535 — {PORT_SPEC_HINT}")
+            ports.add(p)
+        else:
+            raise ValueError(f"Invalid port spec '{part}' — {PORT_SPEC_HINT}")
     return sorted(ports)
 
 
@@ -365,7 +379,11 @@ def tool_port_scanner(target: str, port_spec: str = "common", timeout: float = 0
         return
 
     is_local = ip.startswith("127.") or ip == "0.0.0.0" or target in ("localhost", socket.gethostname())
-    ports = parse_port_spec(port_spec)
+    try:
+        ports = parse_port_spec(port_spec)
+    except ValueError as e:
+        print(f"  {RED}✖ {e}{RESET}\n")
+        return
     print(f"\n  {GRAY}▸ RESOLVED IP   :{RESET} {CYAN}{BOLD}{ip}{RESET}")
     print(f"  {GRAY}▸ PORTS QUEUED  :{RESET} {WHITE}{len(ports)} ports{RESET}\n")
 
