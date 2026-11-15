@@ -27,7 +27,7 @@
 ║ ❖ MEM GRID : [▰▰▰▰▰▰▰▰▱▱▱▱▱▱▱▱▱▱]  43.1% │ 10.1 GB / 23.4 GB ALLOCATED               ║
 ║ ❖ NVME VOL : [▰▰▰▰▰▰▰▰▱▱▱▱▱▱▱▱▱▱]  43.3% │ 101.1 GB / 233.7 GB STORAGE               ║
 ╠══════════════════════════════════════════════════════════════════════════════════════╣
-║ ◈ NET LINK : 192.168.31.182 │ ◈ THREADS : 2107 (438 procs) │ ◈ SCHED JOBS : 7        ║
+║ ◈ NET LINK : 19*.***.**.182 │ ◈ THREADS : 2107 (438 procs) │ ◈ SCHED JOBS : 7        ║
 ║ ◈ TELEMETRY: hud • cyber-watch • cyber-matrix • cyber-jobs (threads/cron)            ║
 ║ ◈ ARSENAL  : cyber-tools • cyber-ports • cyber-kill <port> • cyber-recon • cyber-audit║
 ║ ◈ AI/SEARCH: cyber-cam (face/ASL/voice) • cyber-search • cyber-history • cyber-web   ║
