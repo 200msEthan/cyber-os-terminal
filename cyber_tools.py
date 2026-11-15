@@ -1352,7 +1352,7 @@ def interactive_menu():
         print(
             box_row(
                 f"  {CYAN}[7]{RESET} {WHITE}Active TCP Connections{RESET}   {GRAY}(cyber-conn){RESET}    "
-                f"│  {CYAN}[14]{RESET} {GREEN}{BOLD}Camera Face/ASL/Voice{RESET} {GRAY}(cyber-cam){RESET}"
+                f"│  {CYAN}[14]{RESET} {GREEN}{BOLD}Face/Age/Mood/ASL Cam{RESET} {GRAY}(cyber-cam){RESET}"
             )
         )
         print(

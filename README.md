@@ -30,7 +30,7 @@
 ║ ◈ NET LINK : 19*.***.**.182 │ ◈ THREADS : 2107 (438 procs) │ ◈ SCHED JOBS : 7        ║
 ║ ◈ TELEMETRY: hud • cyber-watch • cyber-matrix • cyber-jobs (threads/cron)            ║
 ║ ◈ ARSENAL  : cyber-tools • cyber-ports • cyber-kill <port> • cyber-recon • cyber-audit║
-║ ◈ AI/SEARCH: cyber-cam (face/ASL/voice) • cyber-search • cyber-history • cyber-web   ║
+║ ◈ AI/VISION: cyber-cam (age/mood/ASL) • cyber-search ║
 ╚══════════════════════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -38,11 +38,12 @@
 
 ## ✨ Key Features
 
-- **📷 Neural Camera Vision, Facial Recognition, Hand Gestures, ASL Sign Language & Voice Cockpit (`cyber-cam`)**:
-  - **Real-Time Facial Recognition & Biometric Lock**: Live HUD targeting reticles and operator presence verification.
+- **📷 Neural Camera Vision, Facial Recognition, Age & Mood Detection, Hand Gestures, ASL Sign Language & Voice Cockpit (`cyber-cam`)**:
+  - **Real-Time Facial Recognition & Biometric Lock**: Live HUD targeting reticles, 68-point facial landmark mesh, and operator presence verification.
+  - **Live Operator Age & 7-Emotion Mood Detection**: Runs deep neural CNN (`AgeGenderNet` + `FaceExpressionNet` + 3D Landmark geometric fusion) to estimate **Operator Age (in years + age bracket + life stage)**, **Dominant Mood** (`😄 Happy`, `😐 Calm/Focused`, `😲 Surprised/Alert`, `😠 Intense`, `😔 Sad`, `😨 Tense`, `😒 Skeptical`), **Cognitive Focus %**, **Stress Index %**, and live emotion probability bars.
   - **21-Point 3D Hand Gesture Action Triggering**: Hold hand signs (`✌️ Peace` → Port Scan, `☝️ Point` → Live Threads & Jobs, `🤟 ILY` → Security Audit, `🤙 Shaka` → Browser History, `👍 Thumbs Up` → Omni-Search) to trigger real terminal operations hands-free!
   - **American Sign Language (ASL) Interpreter & TTS**: Recognizes ASL alphabet letters (`A`, `B`, `C`, `D`, `F`, `I`, `L`, `O`, `U`, `V`, `W`, `Y`) and signs (`HELLO`, `I LOVE YOU`, `YES`), builds words in a live sentence buffer, speaks them aloud via Neural TTS, or runs Omni-Search on them.
-  - **Neural Voice Command Uplink**: Speak natural commands (*"search files for..."*, *"search browser history for..."*, *"scan ports"*, *"kill port 8000"*, *"check jobs"*).
+  - **Neural Voice Command Uplink**: Speak natural commands (*"detect my age and mood"*, *"biometric report"*, *"search files for..."*, *"search browser history for..."*, *"scan ports"*, *"kill port 8000"*, *"check jobs"*).
 - **🌐 Omni-Search Engine (`cyber-search`, `cyber-find`, `cyber-history`, `cyber-web`)**:
   - **Deep Local File & Source Code Search (`cyber-find`)**: Fast filename matching and inside-file content grep with line numbers.
   - **Multi-Browser SQLite History Forensics (`cyber-history`)**: Safely queries Chrome, Firefox, Brave, Edge, and Chromium SQLite databases (even while locked by an open browser) across Linux, macOS, and Windows.
@@ -120,7 +121,7 @@ pip install -e .
 | **`cyber-watch`** | `cyber-watch` | Live auto-refreshing 1Hz telemetry cockpit monitor |
 | **`cyber-matrix`** | `cyber-matrix` | TrueColor Cyberpunk digital rain animation |
 | **`cyber-cockpit`** | `cyber-cockpit` | Launch split-pane Tmux Cyberpunk cockpit |
-| **`cyber-cam`** | `cyber-cam` | Launch Live Camera Face ID, 3D Hand Gesture, ASL Sign Language & Voice Cockpit |
+| **`cyber-cam`** | `cyber-cam` | Launch Live Camera Face ID, Age/Mood CNN, 3D Hand Gesture, ASL & Voice Cockpit |
 | **`cyber-search`** | `cyber-search claude` | Omni-Search across Local Files, Browser History & Live Web simultaneously |
 | **`cyber-find`** | `cyber-find "API_KEY" .` | Search local filenames and inside-file source code |
 | **`cyber-history`** | `cyber-history github` | Search Chrome, Firefox, Brave, Edge & Chromium SQLite history |
@@ -142,6 +143,24 @@ pip install -e .
 | **`cyber-arsenal`** | `cyber-arsenal` | Check status of native system security tools (`nmap`, `dig`, `nc`, etc.) |
 
 ---
+
+## 🧠 Deep-Dive: AI Vision, Gym Biomechanics & Commercial Engagement Suites
+
+### 1. 📷 Neural Camera Vision, Age & Mood Biometrics, ASL & Voice (`cyber-cam`)
+
+Launched via `cyber-cam` (or `python3 cyber_vision.py`), this module opens a 60FPS WebRTC + MediaPipe + Deep CNN cockpit on `http://127.0.0.1:8765` (or native desktop OpenCV via `cyber-cam --native`):
+
+- **Biometric Age & Gender Estimation**: Uses `AgeGenderNet` CNN with Exponential Moving Average (EMA) smoothing to display exact estimated age (`~25 YRS`), age bracket (`23–27y`), and operator life-stage classification.
+- **7-Emotion Mood & Cognitive State Analyzer**: Classifies facial expressions into `😄 Happy`, `😐 Calm/Focused`, `😲 Surprised/Alert`, `😠 Intense`, `😔 Pensive`, `😨 Tense`, and `😒 Skeptical`, computing live **Cognitive Focus %**, **Stress Index %**, and **Head Pose Roll (°)**.
+- **ASL Sign Language & 3D Hand Gesture Actions**:
+  - Hold `✌️ Peace` (1.5s) → Runs Local TCP Port & PID Scanner
+  - Hold `☝️ Point` (1.5s) → Scans Live OS Threads & Scheduled Cron/Systemd Jobs
+  - Hold `🤟 I Love You` (1.5s) → Runs Kernel & Host Security Audit
+  - Hold `🤙 Shaka` (1.5s) → Queries Multi-Browser SQLite History Forensics
+  - Hold `👍 Thumbs Up` (1.5s) → Runs Unified Omni-Search on signed ASL buffer
+
+---
+
 
 ## 🤝 Contributing
 
