@@ -19,7 +19,8 @@
 **CYBER-OS Terminal** transforms any terminal on **Linux, macOS, or Windows** into a high-contrast **24-bit TrueColor Cyberpunk Neon Cockpit** (`#00f3ff` Electric Cyan, `#ff00a0` Neon Magenta, `#00ff9f` Matrix Mint) packed with real-time hardware telemetry, live thread/process & cron job counters, instant port-killer utilities, and a 13-module cybersecurity reconnaissance & forensics suite.
 
 <p align="center">
-  <img src="docs/screenshots/hud.png" alt="CYBER-OS telemetry HUD" width="860">
+  <img src="docs/screenshots/after-install.png" alt="A new terminal after running install.sh: boot HUD, neon prompt with git branch, and cyber-ports" width="760">
+  <br><em>A fresh terminal after <code>bash install.sh</code>: the boot HUD, the neon prompt with git status, and <code>cyber-ports</code>.</em>
 </p>
 
 <p align="center">
