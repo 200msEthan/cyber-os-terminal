@@ -138,6 +138,8 @@ cyber-ports 127.0.0.1 1-1024
 cyber-ports -Target 127.0.0.1 -Range "22,80,443"   # quote lists in PowerShell
 ```
 
+![Terminal output for a localhost port scan](screenshots/commands/cyber-ports.png)
+
 How ranges are read (from PR #47): ends are inclusive, `1024-1` is treated as `1-1024`, `0-2` is trimmed to `1,2`, and bad input such as `web-80` prints a red `✖ Invalid port spec` message. Planned: IPv6, UDP and `--top 1000` ([#23](https://github.com/abhisek11/cyber-os-terminal/issues/23)).
 
 ### `cyber-kill`
@@ -288,6 +290,8 @@ cyber-hash ./scifi_hud.py                      # hash a file
 cyber-hash ~/Downloads/ubuntu-24.04.iso        # compare with the publisher's SHA-256
 ```
 
+![Terminal output for hashing a text string](screenshots/commands/cyber-hash.png)
+
 ### `cyber-decode`
 
 Auto-detects and decodes a payload: **JWT** (pretty-prints header and payload, shows the signature), **Base64**, **hex** and **URL-encoding**, and also shows the input re-encoded as Base64 and hex.
@@ -302,6 +306,8 @@ cyber-decode 68656c6c6f                                     # hex → hello
 cyber-decode aGVsbG8gd29ybGQ=                               # base64 → hello world
 cyber-decode "name%3Dneo%26role%3Dadmin"                    # URL → name=neo&role=admin
 ```
+
+![Terminal output for decoding a hexadecimal payload](screenshots/commands/cyber-decode.png)
 
 Always quote JWTs and anything with `&`, `=` or `%`. JWT signatures are **not verified** — this is for reading tokens, not trusting them. Spurious Base64 output on plain words: [#10](https://github.com/abhisek11/cyber-os-terminal/issues/10).
 
