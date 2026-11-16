@@ -4,11 +4,16 @@ The Bash/zsh and PowerShell shortcuts keep their documented positional arguments
 additional arguments to the underlying Python CLI without splitting quoted values.
 
 ```sh
-cyber-kill 8000                # graceful termination (SIGTERM on POSIX)
-cyber-kill 8000 --force        # explicit hard kill (SIGKILL on POSIX, /F on Windows)
+cyber-kill 8000                # SIGTERM first on POSIX; forced taskkill in PowerShell
+cyber-kill 8000 --force        # SIGKILL on POSIX; /F remains the PowerShell default
 cyber-ports localhost 22,80 --help
 cyber-find "some file" "directory with spaces" --help
 ```
+
+On POSIX the tool sends SIGTERM first, but currently escalates to SIGKILL after 0.15 seconds;
+see #4 for the separate graceful-shutdown work. PowerShell keeps `--force` by default because
+plain Windows `taskkill` often refuses to terminate Node/Python console servers. Explicit
+`--force` is forwarded once, and additional arguments still pass through.
 
 `cyber-ports` still defaults to `127.0.0.1` and the `common` port range; pass the target and
 range before extra flags. `cyber-find` likewise takes a query and directory before extra flags.

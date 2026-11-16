@@ -32,6 +32,10 @@ function cyber-ports {
 function cyber-kill {
     param([Parameter(Mandatory=$true, Position=0)][int]$Port,
           [Parameter(ValueFromRemainingArguments=$true)][string[]]$RemainingArgs = @())
+    # taskkill without /F commonly cannot stop Windows console dev servers.
+    if ($RemainingArgs -notcontains "--force") {
+        $RemainingArgs = @("--force") + $RemainingArgs
+    }
     & $PythonExe (Join-Path $CyberDir "cyber_tools.py") --kill-port $Port @RemainingArgs
 }
 

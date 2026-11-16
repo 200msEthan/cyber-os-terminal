@@ -90,6 +90,8 @@ foreach ($case in (ConvertFrom-Json $env:CYBER_TEST_CASES)) {
         self.assertEqual(len(lines), len(CASES), result.stdout)
         for line, (command, args, expected) in zip(lines, CASES):
             with self.subTest(command=command, args=args):
+                if command == "cyber-kill" and "--force" not in args:
+                    expected = [*expected, "--force"]
                 self.assertEqual([str(value) for value in json.loads(line)[1:]], expected)
 
 
