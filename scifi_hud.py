@@ -24,6 +24,7 @@ import socket
 import subprocess
 import sys
 import time
+import unicodedata
 from typing import Tuple
 
 from cyber_version import __version__
@@ -55,16 +56,38 @@ RESET = "\033[0m"
 BOLD = "\033[1m"
 DIM = "\033[2m"
 
+def _supports_truecolor() -> bool:
+    """macOS Terminal.app only supports 256 colors; 24-bit sequences render as wrong colors there."""
+    if os.environ.get("COLORTERM", "").lower() in ("truecolor", "24bit"):
+        return True
+    if os.environ.get("TERM_PROGRAM") == "Apple_Terminal":
+        return False
+    return True
+
+
+def _rgb_to_256(r: int, g: int, b: int) -> int:
+    """Nearest xterm-256 color cube index."""
+    def lvl(v):
+        return 0 if v < 48 else 1 if v < 115 else (v - 35) // 40
+    return 16 + 36 * lvl(r) + 6 * lvl(g) + lvl(b)
+
+
+def _fg(r: int, g: int, b: int) -> str:
+    if _supports_truecolor():
+        return f"\033[38;2;{r};{g};{b}m"
+    return f"\033[38;5;{_rgb_to_256(r, g, b)}m"
+
+
 # Neon Palette
-CYAN = "\033[38;2;0;243;255m"         # #00f3ff Electric Cyan
-MAGENTA = "\033[38;2;255;0;160m"      # #ff00a0 Neon Magenta
-BLUE = "\033[38;2;90;100;255m"        # #5a64ff Cyber Blue
-PURPLE = "\033[38;2;189;0;255m"       # #bd00ff Synthwave Purple
-YELLOW = "\033[38;2;252;238;10m"      # #fcee0a Cyberpunk Yellow
-GREEN = "\033[38;2;0;255;159m"        # #00ff9f Matrix/Neon Mint
-RED = "\033[38;2;255;42;109m"         # #ff2a6d Alert Crimson
-GRAY = "\033[38;2;110;120;145m"       # #6e7891 Muted Slate
-WHITE = "\033[38;2;230;245;255m"      # #e6f5ff Hologram White
+CYAN = _fg(0, 243, 255)         # #00f3ff Electric Cyan
+MAGENTA = _fg(255, 0, 160)      # #ff00a0 Neon Magenta
+BLUE = _fg(90, 100, 255)        # #5a64ff Cyber Blue
+PURPLE = _fg(189, 0, 255)       # #bd00ff Synthwave Purple
+YELLOW = _fg(252, 238, 10)      # #fcee0a Cyberpunk Yellow
+GREEN = _fg(0, 255, 159)        # #00ff9f Matrix/Neon Mint
+RED = _fg(255, 42, 109)         # #ff2a6d Alert Crimson
+GRAY = _fg(110, 120, 145)       # #6e7891 Muted Slate
+WHITE = _fg(230, 245, 255)      # #e6f5ff Hologram White
 
 ANSI_RE = re.compile(r"\x1b\[[0-9;]*m")
 BOX_INNER_WIDTH = 86
@@ -72,7 +95,11 @@ OS_NAME = platform.system()
 
 
 def visible_len(text: str) -> int:
-    return len(ANSI_RE.sub("", text))
+    """Terminal display width: strips ANSI codes and counts wide glyphs (e.g. ⚡) as 2 columns."""
+    return sum(
+        2 if unicodedata.east_asian_width(ch) in ("W", "F") else 1
+        for ch in ANSI_RE.sub("", text)
+    )
 
 
 def box_row(content: str) -> str:
@@ -190,19 +217,24 @@ def get_memory_info() -> Tuple[float, float, float]:
             )
             vm_out = subprocess.check_output(["vm_stat"], text=True, timeout=1.0)
             page_size = 4096
-            free_pages = 0
+            counts = {}
             for ln in vm_out.splitlines():
                 if "page size of" in ln:
                     m = re.search(r"(\d+)\s+bytes", ln)
                     if m:
                         page_size = int(m.group(1))
-                elif any(k in ln for k in ("Pages free", "Pages speculative")):
-                    m = re.search(r":\s*(\d+)", ln)
-                    if m:
-                        free_pages += int(m.group(1))
+                    continue
+                m = re.match(r"\s*\"?([^:\"]+)\"?:\s*(\d+)", ln)
+                if m:
+                    counts[m.group(1).strip()] = int(m.group(2))
+            # Activity Monitor "Memory Used" = App memory + Wired + Compressed
+            used_pages = (
+                counts.get("Anonymous pages", counts.get("Pages active", 0))
+                + counts.get("Pages wired down", 0)
+                + counts.get("Pages occupied by compressor", 0)
+            )
             total_gb = total_bytes / (1024**3)
-            free_gb = (free_pages * page_size) / (1024**3)
-            used_gb = max(0.0, total_gb - free_gb)
+            used_gb = min(total_gb, (used_pages * page_size) / (1024**3))
             pct = (used_gb / total_gb) * 100.0 if total_gb > 0 else 0.0
             return used_gb, total_gb, pct
         except Exception:
@@ -236,6 +268,9 @@ def get_memory_info() -> Tuple[float, float, float]:
 
 def get_disk_info() -> Tuple[float, float, float]:
     candidates = [os.getcwd(), os.path.expanduser("~"), "/"]
+    if OS_NAME == "Darwin":
+        # "/" is the sealed read-only system volume; user data lives on the Data volume
+        candidates.insert(0, "/System/Volumes/Data")
     for candidate in candidates:
         try:
             usage = shutil.disk_usage(candidate)
@@ -333,7 +368,13 @@ def get_threads_and_jobs_summary() -> Tuple[int, int, int]:
         try:
             out = subprocess.check_output(["ps", "-axo", "pid"], text=True, timeout=1.5)
             proc_count = max(0, len(out.splitlines()) - 1)
-            thread_count = proc_count * 3
+            thread_count = proc_count
+            try:
+                # `ps -M` prints one row per thread
+                tout = subprocess.check_output(["ps", "-axM"], text=True, timeout=3.0)
+                thread_count = max(proc_count, len(tout.splitlines()) - 1)
+            except Exception:
+                pass
         except Exception:
             pass
     elif OS_NAME == "Windows":
@@ -509,7 +550,7 @@ def render_hud(animate_boot: bool = False):
             f" {MAGENTA}◈ ARSENAL  :{RESET} "
             f"{GREEN}{BOLD}cyber-tools{RESET} • "
             f"{CYAN}cyber-ports{RESET} • "
-            f"{CYAN}cyber-kill <port>{RESET} • "
+            f"{CYAN}cyber-kill{RESET} • "
             f"{CYAN}cyber-recon{RESET} • "
             f"{CYAN}cyber-audit{RESET}"
         )

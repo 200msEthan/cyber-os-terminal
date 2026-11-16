@@ -26,6 +26,7 @@ import shutil
 import sqlite3
 import sys
 import tempfile
+import unicodedata
 import urllib.parse
 import urllib.request
 import webbrowser
@@ -71,7 +72,11 @@ OS_NAME = platform.system()
 
 
 def visible_len(text: str) -> int:
-    return len(ANSI_RE.sub("", text))
+    """Terminal display width: strips ANSI codes and counts wide glyphs (e.g. ⚡) as 2 columns."""
+    return sum(
+        2 if unicodedata.east_asian_width(ch) in ("W", "F") else 1
+        for ch in ANSI_RE.sub("", text)
+    )
 
 
 def box_row(content: str) -> str:
