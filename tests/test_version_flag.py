@@ -29,9 +29,11 @@ class VersionSourceTest(unittest.TestCase):
         for script in ("scifi_hud.py", "cyber_tools.py"):
             with self.subTest(script=script):
                 self.assertIn("v{__version__}", read_source(script))
+        with self.subTest(script="cyber_vision.py"):
+            self.assertIn("__CYBER_VERSION__", read_source("cyber_vision.py"))
 
     def test_no_hardcoded_short_version_in_banners(self):
-        pattern = re.compile(r"v4\.5(?![.\d])")
+        pattern = re.compile(r"v\d+\.\d+(?![.\d])")
         for script in CLI_SCRIPTS:
             with self.subTest(script=script):
                 self.assertIsNone(pattern.search(read_source(script)))
