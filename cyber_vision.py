@@ -30,6 +30,8 @@ import urllib.parse
 import webbrowser
 from typing import Any, Dict
 
+from cyber_version import __version__
+
 import cyber_search
 import cyber_tools
 import scifi_hud
@@ -359,7 +361,7 @@ CYBER_VISION_HTML = r"""<!DOCTYPE html>
 <body>
 
 <header>
-  <div class="brand">◢◤ CYBER-OS // NEURAL VISION, AGE & MOOD BIOMETRICS, ASL & OMNI-SEARCH v4.6</div>
+  <div class="brand">◢◤ CYBER-OS // NEURAL VISION, AGE & MOOD BIOMETRICS, ASL & OMNI-SEARCH __CYBER_VERSION__</div>
   <div class="status-pills">
     <span id="camStatus" class="pill">📷 CAMERA: INITIALIZING...</span>
     <span id="faceStatus" class="pill">👤 FACE ID: SCANNING</span>
@@ -489,7 +491,7 @@ CYBER_VISION_HTML = r"""<!DOCTYPE html>
       <button class="btn mag" onclick="promptKillPort()">💥 Kill Port Job</button>
     </div>
 
-    <div id="consoleOutput" class="terminal-out">⚡ CYBER-OS NEURAL COCKPIT v4.6 INITIALIZED.
+    <div id="consoleOutput" class="terminal-out">⚡ CYBER-OS NEURAL COCKPIT __CYBER_VERSION__ INITIALIZED.
 • Live Camera tracks:
   1. Biometric Face ID + 68-Point Facial Landmark Mesh
   2. Real-Time Operator Age Estimation (Deep AgeGenderNet CNN + EMA Smoothing)
@@ -1208,7 +1210,11 @@ class CyberVisionHandler(http.server.BaseHTTPRequestHandler):
             self.send_response(200)
             self.send_header("Content-Type", "text/html; charset=utf-8")
             self.end_headers()
-            self.wfile.write(CYBER_VISION_HTML.replace("__CYBER_TOKEN__", API_TOKEN).encode("utf-8"))
+            self.wfile.write(
+                CYBER_VISION_HTML.replace("__CYBER_TOKEN__", API_TOKEN)
+                .replace("__CYBER_VERSION__", "v" + __version__)
+                .encode("utf-8")
+            )
             return
 
         if parsed.path == "/api/action":
@@ -1409,6 +1415,7 @@ def main():
         description="CYBER-OS // Neural Camera Vision, Facial ID, ASL Sign Language & Voice Cockpit"
     )
     parser.add_argument("--port", type=int, default=8765, help="Local port for Neural Vision Web HUD (default: 8765)")
+    parser.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
     parser.add_argument("--no-browser", action="store_true", help="Do not auto-open browser window")
     parser.add_argument("--native", action="store_true", help="Use native OpenCV desktop window if installed")
     args = parser.parse_args()

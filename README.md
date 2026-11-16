@@ -1,6 +1,6 @@
 <div align="center">
 
-# ⚡ CYBER-OS // NEURAL TERMINAL & SECURITY ARSENAL v4.5
+# ⚡ CYBER-OS // NEURAL TERMINAL & SECURITY ARSENAL v4.6.0
 
 **Zero-Dependency 24-Bit TrueColor Cyberpunk Sci-Fi Terminal HUD, Port Killer, Live Thread/Job Monitor & Cybersecurity Reconnaissance Suite**
 

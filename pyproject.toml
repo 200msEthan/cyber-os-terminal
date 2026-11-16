@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cyber-os-terminal"
-version = "4.5.0"
+dynamic = ["version"]
 description = "Cross-platform 24-bit TrueColor Cyberpunk Sci-Fi Terminal HUD, Port Killer, Live Thread/Job Monitor & Cybersecurity Recon Suite (Linux, macOS, Windows)"
 readme = "README.md"
 requires-python = ">=3.8"
@@ -58,4 +58,7 @@ cyber-search = "cyber_search:main"
 cyber-cam = "cyber_vision:main"
 
 [tool.setuptools]
-py-modules = ["scifi_hud", "cyber_tools", "cyber_search", "cyber_vision"]
+py-modules = ["cyber_version", "scifi_hud", "cyber_tools", "cyber_search", "cyber_vision"]
+
+[tool.setuptools.dynamic]
+version = {attr = "cyber_version.__version__"}
