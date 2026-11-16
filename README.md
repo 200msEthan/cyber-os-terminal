@@ -7,7 +7,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-00f3ff.svg?style=for-the-badge)](LICENSE)
 [![Python 3.8+](https://img.shields.io/badge/Python-3.8%2B-ff00a0.svg?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20macOS%20%7C%20Windows-00ff9f.svg?style=for-the-badge)](#cross-platform-installation)
-[![Zero Dependencies](https://img.shields.io/badge/Dependencies-Zero%20(Stdlib)-fcee0a.svg?style=for-the-badge)](#features)
+[![Zero Dependencies](https://img.shields.io/badge/Dependencies-Zero%20(Stdlib)-fcee0a.svg?style=for-the-badge)](#-requirements)
 [![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-bd00ff.svg?style=for-the-badge)](CONTRIBUTING.md)
 
 </div>
@@ -18,28 +18,25 @@
 
 **CYBER-OS Terminal** transforms any terminal on **Linux, macOS, or Windows** into a high-contrast **24-bit TrueColor Cyberpunk Neon Cockpit** (`#00f3ff` Electric Cyan, `#ff00a0` Neon Magenta, `#00ff9f` Matrix Mint) packed with real-time hardware telemetry, live thread/process & cron job counters, instant port-killer utilities, and a 13-module cybersecurity reconnaissance & forensics suite.
 
-```text
-╔══════════════════════════════════════════════════════════════════════════════════════╗
-║ ◢◤ CYBER-DECK // NEURAL TERMINAL OS v4.5            ⚡ STATUS: ONLINE                 ║
-║ OPERATOR: abhisek@cyberdeck │ TIME: 2026-11-12 // 02:53:18  │ UP: 1d 01h 08m         ║
-╠══════════════════════════════════════════════════════════════════════════════════════╣
-║ ❖ CPU CORE : [▰▰▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱]   8.4% │ AMD Ryzen 5 3600X 6-Core (12T)            ║
-║ ❖ MEM GRID : [▰▰▰▰▰▰▰▰▱▱▱▱▱▱▱▱▱▱]  43.1% │ 10.1 GB / 23.4 GB ALLOCATED               ║
-║ ❖ NVME VOL : [▰▰▰▰▰▰▰▰▱▱▱▱▱▱▱▱▱▱]  43.3% │ 101.1 GB / 233.7 GB STORAGE               ║
-╠══════════════════════════════════════════════════════════════════════════════════════╣
-║ ◈ NET LINK : 19*.***.**.182 │ ◈ THREADS : 2107 (438 procs) │ ◈ SCHED JOBS : 7        ║
-║ ◈ TELEMETRY: hud • cyber-watch • cyber-matrix • cyber-jobs (threads/cron)            ║
-║ ◈ ARSENAL  : cyber-tools • cyber-ports • cyber-kill <port> • cyber-recon • cyber-audit║
-║ ◈ AI/VISION: cyber-cam (age/mood/ASL) • cyber-search ║
-╚══════════════════════════════════════════════════════════════════════════════════════╝
-```
+<p align="center">
+  <img src="docs/screenshots/after-install.png" alt="A new terminal after running install.sh: boot HUD, neon prompt with git branch, and cyber-ports" width="760">
+  <br><em>A fresh terminal after <code>bash install.sh</code>: the boot HUD, the neon prompt with git status, and <code>cyber-ports</code>.</em>
+</p>
+
+<p align="center">
+  <img src="docs/screenshots/menu.png" alt="cyber-tools interactive menu" width="425">
+  <img src="docs/screenshots/ports.png" alt="cyber-ports scanner mapping ports to PIDs" width="425">
+</p>
+
+> ⭐ **If this makes your terminal cooler, star the repo** — it helps other people find it.
+> 🧑‍💻 **New to open source?** Pick any issue labeled [`good first issue`](https://github.com/abhisek11/cyber-os-terminal/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) — each one tells you which file to edit and how to test it.
 
 ---
 
 ## ✨ Key Features
 
-- **📷 Neural Camera Vision, Facial Recognition, Age & Mood Detection, Hand Gestures, ASL Sign Language & Voice Cockpit (`cyber-cam`)**:
-  - **Real-Time Facial Recognition & Biometric Lock**: Live HUD targeting reticles, 68-point facial landmark mesh, and operator presence verification.
+- **📷 Neural Camera Vision, Face Detection, Age & Mood Detection, Hand Gestures, ASL Sign Language & Voice Cockpit (`cyber-cam`)**:
+  - **Real-Time Face Detection**: Live HUD targeting reticles, 68-point facial landmark mesh, and operator presence detection (detection only; it does not yet identify who you are, see [#39](https://github.com/abhisek11/cyber-os-terminal/issues/39)).
   - **Live Operator Age & 7-Emotion Mood Detection**: Runs deep neural CNN (`AgeGenderNet` + `FaceExpressionNet` + 3D Landmark geometric fusion) to estimate **Operator Age (in years + age bracket + life stage)**, **Dominant Mood** (`😄 Happy`, `😐 Calm/Focused`, `😲 Surprised/Alert`, `😠 Intense`, `😔 Sad`, `😨 Tense`, `😒 Skeptical`), **Cognitive Focus %**, **Stress Index %**, and live emotion probability bars.
   - **21-Point 3D Hand Gesture Action Triggering**: Hold hand signs (`✌️ Peace` → Port Scan, `☝️ Point` → Live Threads & Jobs, `🤟 ILY` → Security Audit, `🤙 Shaka` → Browser History, `👍 Thumbs Up` → Omni-Search) to trigger real terminal operations hands-free!
   - **American Sign Language (ASL) Interpreter & TTS**: Recognizes ASL alphabet letters (`A`, `B`, `C`, `D`, `F`, `I`, `L`, `O`, `U`, `V`, `W`, `Y`) and signs (`HELLO`, `I LOVE YOU`, `YES`), builds words in a live sentence buffer, speaks them aloud via Neural TTS, or runs Omni-Search on them.
@@ -50,14 +47,14 @@
   - **Live Internet, Wikipedia & GitHub Intelligence (`cyber-web`)**: Queries DuckDuckGo, Wikipedia OpenSearch, and GitHub Repositories APIs simultaneously.
 - **⚡ Real-Time Neural Telemetry HUD (`hud` / `cyber-watch`)**:
   - Instant CPU load, RAM allocation, NVMe/Disk usage, local IP, system uptime, **live thread count**, **active process count**, and **scheduled jobs counter**.
-  - Zero external Python dependencies (uses pure Python standard library + native OS kernel APIs).
+  - Zero external Python dependencies for the core HUD and security tools (pure standard library + native OS APIs). The camera cockpit loads MediaPipe from a CDN in your browser.
 - **🎯 Port Scanner, PID Mapper & Instant Port Killer (`cyber-ports` & `cyber-kill`)**:
   - Multi-threaded TCP port & banner scanner that maps open ports directly to their owning **PID, Process Name, and Live Thread Count**.
   - Free any stuck development or server port (`3000`, `5000`, `8000`, `8080`, `11434`) with a single command: `cyber-kill 8000`.
 - **🧵 Live Thread Counts, Process Telemetry & Scheduled Jobs Scanner (`cyber-jobs`)**:
   - Aggregates total active processes and **total live OS threads** across the system.
   - Ranks top processes by live thread count and memory footprint.
-  - Audits scheduled jobs across User Crontab, `/etc/cron.*`, Systemd Timers, Active Service Daemons, macOS `launchd`, and Windows Task Scheduler.
+  - Audits scheduled jobs across User Crontab, `/etc/cron.*`, Systemd Timers, Active Service Daemons, and Windows Task Scheduler (macOS `launchd` support is [open for contributors](https://github.com/abhisek11/cyber-os-terminal/issues)).
 - **🛡️ 13-Module Cybersecurity & Reconnaissance Arsenal (`cyber-tools`)**:
   - **Domain / IP Recon (`cyber-recon`)**: IPv4/IPv6 DNS resolution, Reverse PTR, ASN/ISP geolocation, and `dig` MX/NS/TXT interrogation.
   - **SSL/TLS Certificate Inspector (`cyber-ssl`)**: Audits TLS protocol version, cipher suites, X.509 issuer, SAN domains, and days until expiration.
@@ -70,6 +67,22 @@
 - **🖥️ 100% Cross-Platform & Terminal Agnostic**:
   - Runs on **Linux**, **macOS**, **Windows (PowerShell & Windows Terminal)**, and **WSL**.
   - Works inside Kitty, Alacritty, WezTerm, Ghostty, iTerm2, GNOME Terminal, Konsole, Windows Terminal, and VS Code Integrated Terminal.
+
+---
+
+## 📋 Requirements
+
+| Needed for | What |
+| :--- | :--- |
+| Everything | Python **3.8+**, Git, a terminal with 24-bit TrueColor (Windows Terminal, iTerm2, Kitty, WezTerm, GNOME Terminal, VS Code…) |
+| Nice icons in the prompt | A [Nerd Font](https://www.nerdfonts.com/) set as your terminal font |
+| `cyber-cockpit` | `tmux` |
+| `cyber-recon` DNS records | `dig` (dnsutils / bind) |
+| `cyber-nmap` | `nmap` (falls back to the built-in scanner) |
+| `cyber-cam` | A webcam, a Chromium-based browser, and internet access (MediaPipe loads from jsDelivr) |
+| `cyber-cam --native` | `pip install opencv-python` |
+
+`bash install.sh --packages` installs the optional native tools for you.
 
 ---
 
@@ -108,8 +121,18 @@ powershell -ExecutionPolicy Bypass -File .\install.ps1 -Packages
 
 ```bash
 pip install -e .
-# Exposes global `cyber-hud` and `cyber-tools` commands on any OS
+# Exposes `cyber-hud`, `cyber-tools`, `cyber-search` and `cyber-cam` on any OS
+# (the short aliases like `hud` and `cyber-kill` come from the shell installer above)
 ```
+
+### 🧹 Uninstall
+
+```bash
+bash install.sh --uninstall                                          # Linux / macOS
+powershell -ExecutionPolicy Bypass -File .\install.ps1 -Uninstall   # Windows
+```
+
+The installer backs up your shell rc file to `<file>.cyber_backup` before editing it, and it copies `starship.toml` to `~/.config/starship.toml` (restore your own copy if you had one).
 
 ---
 
@@ -128,7 +151,7 @@ pip install -e .
 | **`cyber-find`** | `cyber-find "API_KEY" .` | Search local filenames and inside-file source code |
 | **`cyber-history`** | `cyber-history github` | Search Chrome, Firefox, Brave, Edge & Chromium SQLite history |
 | **`cyber-web`** | `cyber-web "langgraph agents"` | Search live Internet (DuckDuckGo, Wikipedia, GitHub Repos) |
-| **`cyber-tools`** | `cyber-tools` | Open interactive 15-module Cyber-Deck TUI menu |
+| **`cyber-tools`** | `cyber-tools` | Open the interactive Cyber-Deck menu (13 security modules + camera cockpit + omni-search) |
 | **`cyber-ports`** | `cyber-ports 127.0.0.1 1-1024` | Multi-threaded TCP port, PID/thread & banner scanner |
 | **`cyber-kill`** | `cyber-kill 8000` | Identify and kill the process occupying port `8000` |
 | **`cyber-jobs`** | `cyber-jobs` | Scan live thread counts, top processes & scheduled cron/timer jobs |
@@ -166,9 +189,23 @@ Launched via `cyber-cam` (or `python3 cyber_vision.py`), this module opens a 60F
 ---
 
 
+## ⚠️ Responsible Use
+
+The port scanner, recon, TLS and header tools are for systems **you own or are authorized to test**. Browser-history search reads your own local browser databases and never uploads them; omni-search does send your query to DuckDuckGo, Wikipedia and GitHub. The camera cockpit runs on `127.0.0.1` only.
+
+Found a security bug? Please report it privately — see [SECURITY.md](SECURITY.md).
+
+---
+
 ## 🤝 Contributing
 
-Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/abhisek11/cyber-os-terminal/issues) and read [CONTRIBUTING.md](CONTRIBUTING.md).
+CYBER-OS is built in the open and **every skill level is welcome** — Python, shell scripting, Windows/macOS knowledge, docs, design, or testing on your machine.
+
+1. Browse [`good first issue`](https://github.com/abhisek11/cyber-os-terminal/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) or [`help wanted`](https://github.com/abhisek11/cyber-os-terminal/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22).
+2. Comment on the issue so nobody duplicates your work.
+3. Read [CONTRIBUTING.md](CONTRIBUTING.md), fork, and open a PR.
+
+Have an idea for a new module or theme? Open a feature request.
 
 ## 📄 License
 
