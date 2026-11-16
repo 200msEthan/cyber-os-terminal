@@ -153,7 +153,7 @@ The installer backs up your shell rc file to `<file>.cyber_backup` before editin
 | **`cyber-web`** | `cyber-web "langgraph agents"` | Search live Internet (DuckDuckGo, Wikipedia, GitHub Repos) |
 | **`cyber-tools`** | `cyber-tools` | Open the interactive Cyber-Deck menu (13 security modules + camera cockpit + omni-search) |
 | **`cyber-ports`** | `cyber-ports 127.0.0.1 1-1024` | Multi-threaded TCP port, PID/thread & banner scanner |
-| **`cyber-kill`** | `cyber-kill 8000` | Identify and kill the process occupying port `8000` |
+| **`cyber-kill`** | `cyber-kill 8000` | SIGTERM first on POSIX (`--force` for SIGKILL); forced taskkill in PowerShell |
 | **`cyber-jobs`** | `cyber-jobs` | Scan live thread counts, top processes & scheduled cron/timer jobs |
 | **`cyber-recon`** | `cyber-recon github.com` | DNS, reverse PTR, ASN/Geo & MX/NS/TXT intelligence |
 | **`cyber-ssl`** | `cyber-ssl github.com` | Inspect TLS version, cipher suite & X.509 cert expiry |
@@ -170,6 +170,8 @@ The installer backs up your shell rc file to `<file>.cyber_backup` before editin
 | **`cyber-nmap`** | `cyber-nmap 192.168.1.1` | Run `nmap -F -sV` (falls back to the built-in scanner) |
 
 ---
+
+See [shortcut arguments and graceful termination](docs/SHORTCUTS.md) for passing extra flags.
 
 ## 🧠 Deep-Dive: AI Vision, Gym Biomechanics & Commercial Engagement Suites
 

@@ -35,41 +35,41 @@ alias cyber-arsenal="python3 '${CYBER_DIR}/cyber_tools.py' --arsenal"
 
 # Parameterized Cyber CLI Functions
 cyber-ports() {
-    python3 "${CYBER_DIR}/cyber_tools.py" --ports "${1:-127.0.0.1}" --range "${2:-common}"
+    python3 "${CYBER_DIR}/cyber_tools.py" --ports "${1:-127.0.0.1}" --range "${2:-common}" "${@:3}"
 }
 cyber-kill() {
     if [[ -z "$1" ]]; then
-        echo -e "\033[38;2;255;42;109m✖ Usage: cyber-kill <PORT> (e.g. cyber-kill 8000)\033[0m"
+        echo -e "\033[38;2;255;42;109m✖ Usage: cyber-kill <PORT> [--force] (e.g. cyber-kill 8000)\033[0m"
         return 1
     fi
-    python3 "${CYBER_DIR}/cyber_tools.py" --kill-port "$1" --force
+    python3 "${CYBER_DIR}/cyber_tools.py" --kill-port "$1" "${@:2}"
 }
 cyber-recon() {
-    python3 "${CYBER_DIR}/cyber_tools.py" --recon "${1:-example.com}"
+    python3 "${CYBER_DIR}/cyber_tools.py" --recon "${1:-example.com}" "${@:2}"
 }
 cyber-ssl() {
-    python3 "${CYBER_DIR}/cyber_tools.py" --ssl "${1:-github.com}"
+    python3 "${CYBER_DIR}/cyber_tools.py" --ssl "${1:-github.com}" "${@:2}"
 }
 cyber-headers() {
-    python3 "${CYBER_DIR}/cyber_tools.py" --headers "${1:-https://github.com}"
+    python3 "${CYBER_DIR}/cyber_tools.py" --headers "${1:-https://github.com}" "${@:2}"
 }
 cyber-hash() {
-    python3 "${CYBER_DIR}/cyber_tools.py" --hash "${1:-cyberdeck}"
+    python3 "${CYBER_DIR}/cyber_tools.py" --hash "${1:-cyberdeck}" "${@:2}"
 }
 cyber-decode() {
-    python3 "${CYBER_DIR}/cyber_tools.py" --decode "$1"
+    python3 "${CYBER_DIR}/cyber_tools.py" --decode "$1" "${@:2}"
 }
 cyber-keygen() {
-    python3 "${CYBER_DIR}/cyber_tools.py" --keygen "${1:-32}"
+    python3 "${CYBER_DIR}/cyber_tools.py" --keygen "${1:-32}" "${@:2}"
 }
 cyber-fim() {
-    python3 "${CYBER_DIR}/cyber_tools.py" --fim "${1:-.}"
+    python3 "${CYBER_DIR}/cyber_tools.py" --fim "${1:-.}" "${@:2}"
 }
 cyber-secrets() {
-    python3 "${CYBER_DIR}/cyber_tools.py" --secrets "${1:-.}"
+    python3 "${CYBER_DIR}/cyber_tools.py" --secrets "${1:-.}" "${@:2}"
 }
 cyber-nmap() {
-    python3 "${CYBER_DIR}/cyber_tools.py" --nmap "${1:-127.0.0.1}"
+    python3 "${CYBER_DIR}/cyber_tools.py" --nmap "${1:-127.0.0.1}" "${@:2}"
 }
 
 # Neural Camera Vision (Face ID, Age/Mood, Hand Gestures, ASL Sign Language & Voice Cockpit)
@@ -82,7 +82,7 @@ cyber-search() {
     python3 "${CYBER_DIR}/cyber_search.py" --omni "${*:-cyber}"
 }
 cyber-find() {
-    python3 "${CYBER_DIR}/cyber_search.py" --files "${1:-cyber}" --dir "${2:-.}"
+    python3 "${CYBER_DIR}/cyber_search.py" --files "${1:-cyber}" --dir "${2:-.}" "${@:3}"
 }
 cyber-history() {
     python3 "${CYBER_DIR}/cyber_search.py" --history "${*:-recent}"
