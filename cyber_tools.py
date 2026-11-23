@@ -142,7 +142,38 @@ def visible_len(text: str) -> int:
     )
 
 
+def truncate_visible(text: str, width: int) -> str:
+    """Cut text to at most `width` terminal columns, ending with an ellipsis.
+
+    ANSI color codes take no columns and are kept, and RESET is appended when the cut text
+    had any, so a color never runs past the cut. Text that already fits is returned as is.
+    """
+    if visible_len(text) <= width:
+        return text
+    if width <= 0:
+        return ""
+    budget = width - 1  # one column for the ellipsis
+    out = []
+    used = 0
+    pos = 0
+    while pos < len(text):
+        match = ANSI_RE.match(text, pos)
+        if match:
+            out.append(match.group())
+            pos = match.end()
+            continue
+        ch_width = visible_len(text[pos])
+        if used + ch_width > budget:
+            break
+        out.append(text[pos])
+        used += ch_width
+        pos += 1
+    suffix = RESET if ANSI_RE.search(text) else ""
+    return "".join(out) + "…" + suffix
+
+
 def box_row(content: str) -> str:
+    content = truncate_visible(content, BOX_INNER_WIDTH)
     vlen = visible_len(content)
     pad = max(0, BOX_INNER_WIDTH - vlen)
     return f"{MAGENTA}║{RESET}{content}{' ' * pad}{MAGENTA}║{RESET}"
